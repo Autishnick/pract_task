@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login, reset } from "../redux/slices/authSlice";
 import LoginForm from "../components/Auth/LoginForm";
-import { AlertCircle, Lock } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -14,17 +14,20 @@ const LoginPage = () => {
   );
 
   useEffect(() => {
-    if (isSuccess || user) {
+    if (user || isSuccess) {
       navigate("/");
     }
-    return () => {
-      dispatch(reset());
-    };
-  }, [user, isSuccess, navigate, dispatch]);
+  }, [user, isSuccess, navigate]);
 
   const handleSubmit = (formData) => {
     dispatch(login(formData));
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(reset());
+    };
+  }, [dispatch]);
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 sm:p-6">

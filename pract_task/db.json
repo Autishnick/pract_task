@@ -17,14 +17,43 @@
       "name": "Large Room",
       "capacity": 5,
       "price": 400
+    },
+    {
+      "id": "e820",
+      "name": "main",
+      "capacity": 112,
+      "price": 11111111
     }
   ],
-  "bookings": [],
+  "bookings": [
+    {
+      "id": "55f5",
+      "roomId": "2",
+      "title": "wefwef",
+      "startTime": "2025-10-16T21:00",
+      "endTime": "2025-10-16T21:05",
+      "userId": "6683"
+    },
+    {
+      "id": "c76a",
+      "roomId": "1",
+      "title": "blabla",
+      "startTime": "2025-10-16T16:00",
+      "endTime": "2025-10-16T16:10",
+      "userId": "6683"
+    }
+  ],
   "users": [
     {
       "id": "f27f",
       "name": "VLADYSLAV SHEVCHUK",
       "email": "vladislavpro100igrok@gmail.com",
+      "password": "111111"
+    },
+    {
+      "id": "6683",
+      "name": "blabla",
+      "email": "cubaorvlad@gmail.com",
       "password": "111111"
     }
   ]
