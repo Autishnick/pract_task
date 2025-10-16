@@ -9,12 +9,20 @@ const mockRooms = [
 
 export const fetchRooms = createAsyncThunk(
   'rooms/fetchRooms',
-  async () => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(mockRooms);
-      }, 1000); 
-    });
+  async (_, thunkAPI) => {
+    try {
+      const response = await fetch(`${API_URL}rooms`);
+
+      if (!response.ok) {
+        return thunkAPI.rejectWithValue('Failed to fetch rooms');
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      const message = error.message || error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
   }
 );
 
@@ -39,7 +47,7 @@ const roomsSlice = createSlice({
       })
       .addCase(fetchRooms.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.error.message;
+        state.error = action.payload;
       });
   },
 });

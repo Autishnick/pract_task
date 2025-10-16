@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const API_URL = 'http://localhost:5173/'; 
+const API_URL = 'http://localhost:5000/';
 
-const token = localStorage.getItem('token'); 
+const token = localStorage.getItem('token');
 
 const initialState = {
   user: null,
@@ -17,7 +17,14 @@ export const register = createAsyncThunk(
   'auth/register',
   async (userData, thunkAPI) => {
     try {
-      const response = await fetch(`${API_URL}register`, {
+      const checkUserResponse = await fetch(`${API_URL}users?email=${userData.email}`);
+      const existingUsers = await checkUserResponse.json();
+
+      if (existingUsers.length > 0) {
+        return thunkAPI.rejectWithValue('User with this email already exists');
+      }
+
+      const response = await fetch(`${API_URL}users`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -25,16 +32,13 @@ export const register = createAsyncThunk(
         body: JSON.stringify(userData),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        const message = data.message || `Registration failed with status: ${response.status}`;
-        throw new Error(message);
+        return thunkAPI.rejectWithValue('Registration failed');
       }
-      if (data.token) {
-        localStorage.setItem('token', data.token);
-      }
-      return data;
+
+      const newUser = await response.json();
+      localStorage.setItem('token', newUser.id);
+      return { user: newUser, token: newUser.id };
     } catch (error) {
       const message = error.message || error.toString();
       return thunkAPI.rejectWithValue(message);
@@ -46,24 +50,24 @@ export const login = createAsyncThunk(
   'auth/login',
   async (userData, thunkAPI) => {
     try {
-      const response = await fetch(`${API_URL}login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
+      const { email, password } = userData;
+      const url = `${API_URL}users?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
       
-      const data = await response.json();
+      const response = await fetch(url);
+
       if (!response.ok) {
-        const message = data.message || `Login failed with status: ${response.status}`;
-        throw new Error(message);
+        return thunkAPI.rejectWithValue('Server error during login');
       }
 
-      if (data.token) {
-        localStorage.setItem('token', data.token);
+      const foundUsers = await response.json();
+
+      if (foundUsers.length === 0) {
+        return thunkAPI.rejectWithValue('Invalid credentials or user not found');
       }
-      return data;
+
+      const user = foundUsers[0];
+      localStorage.setItem('token', user.id);
+      return { user, token: user.id };
     } catch (error) {
       const message = error.message || error.toString();
       return thunkAPI.rejectWithValue(message);
@@ -100,6 +104,7 @@ export const authSlice = createSlice({
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
+        state.isSuccess = false;
         state.message = action.payload;
         state.user = null;
         state.token = null;
@@ -116,6 +121,7 @@ export const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
+        state.isSuccess = false;
         state.message = action.payload;
         state.user = null;
         state.token = null;

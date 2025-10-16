@@ -1,0 +1,31 @@
+{
+  "rooms": [
+    {
+      "name": "Standard Roomd",
+      "capacity": 4,
+      "price": 100,
+      "id": "1"
+    },
+    {
+      "id": "2",
+      "name": "Deluxe Room",
+      "capacity": 2,
+      "price": 150
+    },
+    {
+      "id": "3",
+      "name": "Large Room",
+      "capacity": 5,
+      "price": 400
+    }
+  ],
+  "bookings": [],
+  "users": [
+    {
+      "id": "f27f",
+      "name": "VLADYSLAV SHEVCHUK",
+      "email": "vladislavpro100igrok@gmail.com",
+      "password": "111111"
+    }
+  ]
+}
