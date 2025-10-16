@@ -50,9 +50,23 @@ const BookingsPage = () => {
       navigate("/login");
       return;
     }
+    console.log("Current user:", user);
+    console.log("Bookings status:", status);
+    console.log("Bookings:", bookings);
+    console.log("Rooms:", rooms);
+
     dispatch(fetchBookings());
     dispatch(fetchRooms());
   }, [user, dispatch, navigate]);
+
+  // Додатковий лог для відстеження змін
+  useEffect(() => {
+    console.log("Bookings updated:", bookings);
+  }, [bookings]);
+
+  useEffect(() => {
+    console.log("Rooms updated:", rooms);
+  }, [rooms]);
 
   const openCreateModal = () => {
     setSelectedBooking(null);
