@@ -30,7 +30,7 @@ const RoomsPage = () => {
   };
 
   const handleDelete = (roomId) => {
-    if (window.confirm("Видалити цю кімнату?")) {
+    if (window.confirm("Delete this room?")) {
       dispatch(deleteRoom(roomId));
     }
   };

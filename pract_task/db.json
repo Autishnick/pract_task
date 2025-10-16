@@ -1,28 +1,22 @@
 {
   "rooms": [
     {
-      "name": "Standard Roomd",
-      "capacity": 4,
-      "price": 100,
-      "id": "1"
-    },
-    {
-      "id": "2",
       "name": "Deluxe Room",
-      "capacity": 2,
-      "price": 150
+      "capacity": 17,
+      "price": 150,
+      "id": "2"
     },
     {
-      "id": "3",
-      "name": "Large Room",
-      "capacity": 5,
-      "price": 400
+      "id": "0b6e",
+      "name": "123",
+      "capacity": 11,
+      "price": 11111
     },
     {
-      "id": "e820",
-      "name": "main",
-      "capacity": 112,
-      "price": 11111111
+      "id": "481e",
+      "name": "wegeg",
+      "capacity": 11,
+      "price": 11
     }
   ],
   "bookings": [
@@ -36,11 +30,27 @@
     },
     {
       "id": "c76a",
-      "roomId": "1",
+      "roomId": null,
       "title": "blabla",
-      "startTime": "2025-10-16T16:00",
+      "startTime": "34567-12-24T06:59",
       "endTime": "2025-10-16T16:10",
-      "userId": "6683"
+      "userId": "f27f"
+    },
+    {
+      "id": "6d3c",
+      "roomId": "2",
+      "title": "gfghf",
+      "startTime": "2025-10-16T21:06",
+      "endTime": "2025-10-16T22:05",
+      "userId": "f27f"
+    },
+    {
+      "id": "90f3",
+      "roomId": "0b6e",
+      "title": "рпар",
+      "startTime": "2025-10-18T22:09",
+      "endTime": "2025-10-18T22:11",
+      "userId": "f27f"
     }
   ],
   "users": [
