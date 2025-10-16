@@ -1,4 +1,8 @@
 import { Mail, Lock, User } from "lucide-react";
+import {
+  useFormValidation,
+  validationRules,
+} from "../../hooks/UseFormValidation";
 import FormInput from "../common/FormInput";
 import SubmitButton from "../common/SubmitButton";
 import PasswordRequirements from "../common/PasswordRequirements";
@@ -34,8 +38,11 @@ const RegisterForm = ({ onSubmit, isLoading = false }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      const { confirmPassword, ...submitData } = formData;
-      onSubmit(submitData);
+      onSubmit({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      });
     }
   };
 
@@ -63,19 +70,18 @@ const RegisterForm = ({ onSubmit, isLoading = false }) => {
         placeholder="your@email.com"
       />
 
-      <div>
-        <FormInput
-          label="Password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          error={errors.password}
-          icon={Lock}
-          placeholder="••••••••"
-          showPasswordToggle
-        />
+      <FormInput
+        label="Password"
+        name="password"
+        value={formData.password}
+        onChange={handleChange}
+        error={errors.password}
+        icon={Lock}
+        placeholder="••••••••"
+        showPasswordToggle
+      >
         <PasswordRequirements password={formData.password} />
-      </div>
+      </FormInput>
 
       <FormInput
         label="Confirm Password"
